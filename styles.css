@@ -4,6 +4,21 @@
     box-sizing: border-box;
 }
 
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100vh; /* 100% высоты видимой области */
+    overflow: hidden; /* Убираем прокрутку, если она не нужна */
+}
+
+/* Основной контейнер приложения */
+#app {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
 body, html {
     width: 360px;
     height: 800px;

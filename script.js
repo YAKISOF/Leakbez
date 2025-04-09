@@ -90,3 +90,11 @@ function highlightWinner(segment) {
         }, 3);
     }
 }
+// Инициализация Telegram Web App
+const tg = window.Telegram.WebApp;
+
+// Разворачиваем приложение на полный экран
+tg.expand();
+
+// Убедимся, что приложение готово
+tg.ready();
