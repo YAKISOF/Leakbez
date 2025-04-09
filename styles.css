@@ -20,8 +20,6 @@ html, body {
     flex-direction: column;
 }
 body, html {
-    width: 360px;
-    height: 800px;
     overflow: hidden;
     font-family: Arial, sans-serif;
 }
