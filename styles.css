@@ -1,0 +1,258 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    width: 360px;
+    height: 800px;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: #f0f0f0;
+}
+
+/* Фон */
+.background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: url('Background/BG.png') no-repeat center center;
+    background-size: cover;
+    z-index: 1;
+}
+
+/* Bg1 - всегда видимый слой */
+.background::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('Background/Bg1.png') no-repeat center center;
+    background-size: cover;
+    opacity: 1;
+    z-index: 2;
+}
+
+/* Bg2 - появляется при победе */
+.background::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150%;
+    height: 150%;
+    background: url('Background/Bg2.png') no-repeat center center;
+    background-size: cover;
+    z-index: 3;
+    clip-path: circle(0% at 50% 50%);
+    transition: clip-path 0.2s ease-out; /* Быстрое сворачивание лучей */
+}
+
+.background.win-effect::after {
+    clip-path: circle(100% at 50% 50%);
+    animation: growRays 1s ease-out forwards; /* Медленный рост лучей */
+}
+
+@keyframes growRays {
+    0% {
+        clip-path: circle(0% at 50% 50%);
+    }
+    100% {
+        clip-path: circle(100% at 50% 50%);
+    }
+}
+
+/* Логотип */
+.logo {
+    position: absolute;
+    top: 75px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 225px;
+    height: 100px;
+    z-index: 3;
+}
+
+/* Колесо фортуны */
+.wheel-container {
+    position: absolute;
+    top: 243px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 318px;
+    height: 318px;
+    z-index: 4;
+}
+
+.wheel {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: url('wheel-base.png') no-repeat center center;
+    background-size: cover;
+    border-radius: 50%;
+    border: 15px solid #ffd700;
+    transition: transform 5s cubic-bezier(0.17, 0.67, 0.21, 0.99);
+}
+
+.segments {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.segment {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform-origin: 50% 50%; /* Точка вращения — центр круга */ /* Сегменты прозрачные */
+    /* Обрезаем сегмент в форме треугольного сектора (25.71°) */
+    clip-path: polygon(50% 50%, 50% 0%, calc(50% + 22.3%) 0%);
+    background-color: #f0f0f033;
+}
+
+.segment-img {
+    position: absolute;
+    top: 10px;
+    left: 58%;
+    transform: translateX(-50%);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Позиционирование сегментов */
+.segment:nth-child(1) { transform: rotate(0deg); }
+.segment:nth-child(2) { transform: rotate(25.71deg); }
+.segment:nth-child(3) { transform: rotate(51.42deg); }
+.segment:nth-child(4) { transform: rotate(77.13deg); }
+.segment:nth-child(5) { transform: rotate(102.84deg); }
+.segment:nth-child(6) { transform: rotate(128.55deg); }
+.segment:nth-child(7) { transform: rotate(154.26deg); }
+.segment:nth-child(8) { transform: rotate(180deg); }
+.segment:nth-child(9) { transform: rotate(205.71deg); }
+.segment:nth-child(10) { transform: rotate(231.42deg); }
+.segment:nth-child(11) { transform: rotate(257.13deg); }
+.segment:nth-child(12) { transform: rotate(282.84deg); }
+.segment:nth-child(13) { transform: rotate(308.55deg); }
+.segment:nth-child(14) { transform: rotate(334.26deg); }
+
+/* Динамическое вращение изображений */
+.segment:nth-child(1) .segment-img { transform: translateX(-50%) rotate(0deg); }
+.segment:nth-child(2) .segment-img { transform: translateX(-50%) rotate(17deg); }
+.segment:nth-child(3) .segment-img { transform: translateX(-50%) rotate(12deg); }
+.segment:nth-child(4) .segment-img { transform: translateX(-50%) rotate(4deg); }
+.segment:nth-child(5) .segment-img { transform: translateX(-50%) rotate(1deg); }
+.segment:nth-child(6) .segment-img { transform: translateX(-50%) rotate(1deg); }
+.segment:nth-child(7) .segment-img { transform: translateX(-50%) rotate(11deg); }
+.segment:nth-child(8) .segment-img { transform: translateX(-50%) rotate(4deg); }
+.segment:nth-child(9) .segment-img { transform: translateX(-50%) rotate(11deg); }
+.segment:nth-child(10) .segment-img { transform: translateX(-50%) rotate(10deg); }
+.segment:nth-child(11) .segment-img { transform: translateX(-50%) rotate(13deg); }
+.segment:nth-child(12) .segment-img { transform: translateX(-50%) rotate(14deg); }
+.segment:nth-child(13) .segment-img { transform: translateX(-50%) rotate(15deg); }
+.segment:nth-child(14) .segment-img { transform: translateX(-50%) rotate(20deg); }
+
+/* Стрелка */
+.pointer {
+    position: absolute;
+    top: 0px;
+    left: 52%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 30px;
+    background-color: red; /* Для теста, потом можно убрать или сделать прозрачным */
+    z-index: 9;
+}
+.arrow {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 45px;
+    height: 66px;
+    z-index: 10;
+}
+
+/* Увеличенное изображение */
+/* Увеличенное изображение */
+.enlarged-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    display: none;
+    z-index: 6;
+    opacity: 0; /* Добавляем начальную прозрачность */
+}
+
+.enlarged-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 15px solid #ffd700;
+    transform: scale(0); /* Начальный масштаб 0 */
+    transition: transform 0.2s ease-out, opacity 0.2s ease-out; /* Добавляем плавный переход */
+}
+
+/* Класс для активного состояния */
+.enlarged-container.active {
+    opacity: 1;
+    display: block;
+}
+
+.enlarged-container.active .enlarged-img {
+    transform: scale(1); /* Конечный масштаб 1 */
+    opacity: 1;
+}
+
+/* Кнопки */
+.buttons {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 7;
+}
+
+.spin-button, .back-button {
+    width: 245px;
+    height: 91px;
+    cursor: pointer;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.spin-button {
+    transform: translateY(0);
+}
+
+.spin-button.hidden {
+    transform: translateY(150px);
+    opacity: 0;
+}
+
+.back-button {
+    transform: translateY(150px);
+    opacity: 0;
+    display: none;
+}
+
+.back-button.visible {
+    transform: translateY(0);
+    opacity: 1;
+    display: block;
+}
